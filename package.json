@@ -1,0 +1,28 @@
+{
+  "name": "palpite-box",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "start": "next start",
+    "build": "next build"
+  },
+  "keywords": [],
+  "author": "Wilian Ansanello",
+  "license": "MIT",
+  "dependencies": {
+    "autoprefixer": "^10.2.5",
+    "dom": "0.0.3",
+    "google-spreadsheet": "^3.1.15",
+    "google-spreadsheets": "^2.0.0",
+    "moment": "^2.29.1",
+    "next": "^10.0.9",
+    "postcss-import": "^14.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "reactdom": "^2.0.0",
+    "swr": "^0.5.6",
+    "tailwindcss": "^2.1.1"
+  }
+}
