@@ -39,7 +39,7 @@ export default async (req, res) => {
       Whatsapp: data.Whatsapp,
       Cupom,
       Promo,
-      //Critica: data.Critica,
+      Critica: data.Critica,
       'Data Preenchimento': moment().format('DD/MM/YYYY, HH:mm:ss'),
       Nota: 5
     })
