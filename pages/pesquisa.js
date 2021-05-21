@@ -7,7 +7,7 @@ const Pesquisa = () => {
     Email: '',
     Whatsapp: '',
     Critica: '',
-     Nota: 0,
+    Nota: 0,
     Indica: ''
   })
   const notas = [0, 1, 2, 3, 4, 5]
@@ -26,7 +26,7 @@ const Pesquisa = () => {
       setSuccess(true)
       setRetorno(data)
     } catch (err) {
-
+      console.log('err')
     }
   }
 
@@ -81,7 +81,6 @@ const Pesquisa = () => {
             <button className='bg-indigo-700 px-8 py-4 font-bold rounded-lg shadow-lg hover:shadow' onClick={save} >Enviar crítica / sugestão</button>
           </Link>
         </div>
-      
       </div>}
       {sucess && <div className='w-1/5 mx-auto my-6'>
         <p className='mb-6 text-center pbg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3'>Obrigado por contribuir com sua sugestão ou crítica</p>
@@ -95,7 +94,7 @@ const Pesquisa = () => {
           retorno.showCoupon && <div className='text-center border p-4 mb-4'>
             <span className='font-bold block-mb2'> {retorno.Promo}</span>
             <br />
-            Tire um print ou foto desta tela e apresente ao garçom.      
+            Tire um print ou foto desta tela e apresente ao garçom.
           </div>
         }
       </div>}
