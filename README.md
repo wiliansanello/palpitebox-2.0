@@ -1,7 +1,5 @@
 # palpite-box
 
-[![HitCount](https://hits.dwyl.com/wiliansanello/projeto-git.svg)](https://hits.dwyl.com/wiliansanello/projeto-git)
-
 
 ## Início:
 
@@ -9,23 +7,31 @@ O Palpite-box é um serviço de pesquisa de satisfação, que permite ao cliente
 
 ## Pré-requisitos:
 
-O que é necessário para o projeto rodar no ambiente local de quem está visualizando.
+Você precisa do NodeJS e do NPM instalado em sua máquina
 
+...
+npm install
+npm run dev
+...
 
 ## Layout:
 
-Link do layout
+O layout foi criado utilizando o Figma. Você pode visualizá-lo,clicando [aqui](https://www.figma.com/file/GSLVzvsJKl4QXZ8cC2iGuO/palpite-box?node-id=0%3A1)
 
 
 ## Colocando em produção:
 
-Especificar qual(is) tecnologia(s) necessária(s) para executar o projeto em produção.
+Este projeto pode ser colocado em produção utilizando o Vercel (sem configurações extras).
 
 
 ## Construído com:
 
-* [NextJS](https://nextjs.org) - The React Framework
-* [Visual Studio Code](https://code.visualstudio.com) - Integrated Development Environment
+* [NextJS](https://nextjs.org) - The React Framework.
+* [Figma](https://www.figma.com) - Online prototyping tool.
+* [Tailwind CSS](https://tailwindcss.com) - A utility-first framework for rapidly building custom designs.
+* [useSWR](https://swr.vercel.app) - React hooks for data fetching.
+* [Moment](https://momentjs.com/) - Parse, validate, manipulate, and display dates and times in JavaScript.
+* [Google Spreadsheet API](https://developers.google.com/sheets/api) - Read and write spreadsheet data
 
 
 ## Author:
