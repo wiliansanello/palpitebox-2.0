@@ -1,16 +1,20 @@
 import React from 'react'
 import Link from 'next/link'
-import JSON from '../package.json'
+import PageTitle from '../components/PageTitle'
 
 const Sobre = () => {
   return (
-    <div>
-      <h1>Sobre</h1>
-      <div>
+    <div className='pt-6 text-center'>
+      <PageTitle title='Sobre' />
+      <label>
+        O Palpite-box é um serviço de pesquisa de satisfação, que permite ao cliente < br />
+        opinar sobre a qualidade do atendimento e do serviço prestado pelo restaurante, < br />
+        premiando a quem participa.< br />
+      </label>
+      <div className='pt-6 pb-8 text-blue-400'>
         <Link href='/'>
-          <a>Home</a>
+          <a>Ir para o começo</a>
         </Link>
-        <label className='text-center font-bold'>Versão: {JSON.version}</label>
       </div>
     </div>
 
