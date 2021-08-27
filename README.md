@@ -29,7 +29,7 @@ Este projeto pode ser colocado em produção utilizando o Vercel (sem configura�
 * [NextJS](https://nextjs.org) - The React Framework.
 * [Figma](https://www.figma.com) - Online prototyping tool.
 * [Tailwind CSS](https://tailwindcss.com) - A utility-first framework for rapidly building custom designs.
-* [useSWR](https://swr.vercel.app) - React hooks for data fetching.
+* [SWR](https://swr.vercel.app) - React hooks for data fetching.
 * [Moment](https://momentjs.com/) - Parse, validate, manipulate, and display dates and times in JavaScript.
 * [Google Spreadsheet API](https://developers.google.com/sheets/api) - Read and write spreadsheet data
 
