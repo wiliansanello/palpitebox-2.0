@@ -69,10 +69,7 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-<<<<<<< HEAD
-=======
 .env.local
->>>>>>> 7459b064ea91ece93646631af610ffc5858bf02a
 .env.test
 .env.local
 

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import useSWR from 'swr'
 import PageTitle from '../components/PageTitle'
 
+
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 
 const Contato = () => {
@@ -14,7 +15,7 @@ const Contato = () => {
       <PageTitle title='Contato' />
       {!data && <p>Carregando...</p>}
       {data && <div>
-        <img className='mx-auto' src='logo_restaurante.png' />
+        <img className='mx-auto' src='logo__restaurante.png' />
         <h1>{data.nomeRestaurante}</h1>
         <h1>{data.endereco}</h1>
         <h1>{data.bairro}</h1>
