@@ -9,7 +9,7 @@ const Header = () => {
       <div className={styles.wrapper}>
         <div className='container mx-auto'>
           <Link href='/' >
-            <a><img className='mx-auto' src='/logo__palpitebox.png' alt='PalpiteBox' /></a>
+            <a><img className='mx-auto' src='/logo_palpitebox.png' alt='PalpiteBox' /></a>
           </Link>
           <label className='text-center font-bold'>Versão: {JSON.version}</label>
         </div>
