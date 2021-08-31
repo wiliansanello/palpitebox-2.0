@@ -5,7 +5,6 @@ import 'react-toastify/dist/ReactToastify.css'
 import useSWR from 'swr'
 import PageTitle from '../components/PageTitle'
 
-
 const Pesquisa = () => {
   const [form, setForm] = useState({
     Nome: '',

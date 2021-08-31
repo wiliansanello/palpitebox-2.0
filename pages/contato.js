@@ -3,7 +3,6 @@ import Link from 'next/link'
 import useSWR from 'swr'
 import PageTitle from '../components/PageTitle'
 
-
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 
 const Contato = () => {
