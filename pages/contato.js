@@ -1,29 +1,45 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
-import useSWR from 'swr'
 import PageTitle from '../components/PageTitle'
-
-const fetcher = (...args) => fetch(...args).then(res => res.json())
 
 const Contato = () => {
 
-  const { data, error } = useSWR('/api/get-promo', fetcher)
+  const [regsData, setRegsData] = useState({})
+
+
+  const getData = async () => {
+
+    try {
+      const response = await fetch('/api/get-promo', {
+        method: 'POST',
+        body: JSON.stringify(regsData)
+      })
+
+      const restaurantData = await response.json()
+      setRegsData(restaurantData)
+
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+
+  getData()
 
   return (
-    <div className='pt-6 text-center font-bold'>
+    <div className='pt-2 text-center font-bold'>
       <PageTitle title='Contato' />
-      {!data && <p>Carregando...</p>}
-      {data && <div>
+      {<div>
         <img className='mx-auto' src='logo_restaurante.png' />
-        <h1>{data.nomeRestaurante}</h1>
-        <h1>{data.endereco}</h1>
-        <h1>{data.bairro}</h1>
-        <h1>{data.cidade} {data.uf}</h1>
-        <h1>{data.telefone}</h1>
+        {!regsData && <h1>Carregando...</h1>}
+        <h1>{regsData.nomeRestaurante}</h1>
+        <h1>{regsData.endereco} - {regsData.bairro}</h1>
+        <h1>{regsData.cidade} - {regsData.uf}</h1>
+        <h1>{regsData.telefone}</h1>
       </div>
       }
 
-      <div className='pt-6 pb-8 text-center text-blue-400'>
+      <div className='pt-6 pb-8 text-center text-blue-400 text-xl'>
         <Link href='/'>
           <a>Ir para o começo</a>
         </Link>

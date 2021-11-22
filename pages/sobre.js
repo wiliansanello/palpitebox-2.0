@@ -11,7 +11,7 @@ const Sobre = () => {
         opinar sobre a qualidade do atendimento e do serviço prestado pelo restaurante, < br />
         premiando a quem participa.< br />
       </label>
-      <div className='pt-6 pb-8 text-blue-400'>
+      <div className='pt-6 pb-8 font-bold text-blue-400 text-xl'>
         <Link href='/'>
           <a>Ir para o começo</a>
         </Link>

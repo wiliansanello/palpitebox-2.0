@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import useSWR from 'swr'
 import PageTitle from '../components/PageTitle'
+import InputMask from 'react-input-mask'
 
 const Pesquisa = () => {
   const [form, setForm] = useState({
@@ -19,9 +19,7 @@ const Pesquisa = () => {
   const [sucess, setSuccess] = useState(false)
   const [retorno, setRetorno] = useState({})
   const [saveForm, setSaveForm] = useState(true)
-
-  const fetcher = (...args) => fetch(...args).then(res => res.json())
-  const { data, error } = useSWR('/api/get-promo', fetcher)
+  const [name, setName] = useState('')
 
   const save = async () => {
     try {
@@ -31,14 +29,30 @@ const Pesquisa = () => {
         body: JSON.stringify(form)
       })
 
-      const dataForm = await response.json()
-      setRetorno(dataForm)
+      const data = await response.json()
+      setRetorno(data)
 
-      const formIsFilled = dataForm.saveData //usei o obj dataForm, pois o obj retorno depende da execução de um novo setRetorno para ser alterado (em casos que antes de salvar, o cliente preencheu parcialmente o form)
+      const formIsFilled = data.saveData //usei o obj data, pois o obj retorno depende da execução de um novo setRetorno para ser alterado (em casos que antes de salvar, o cliente preencheu parcialmente o form)
       setSaveForm(formIsFilled)
       setSuccess(formIsFilled)
     } catch (err) {
       console.log('err')
+    }
+  }
+
+  const getName = async () => {
+
+    try {
+      const response = await fetch('/api/get-promo', {
+        method: 'POST',
+        body: JSON.stringify(name)
+      })
+
+      const restaurantData = await response.json()
+      setName(restaurantData)
+
+    } catch (err) {
+      console.log(err)
     }
   }
 
@@ -89,15 +103,16 @@ const Pesquisa = () => {
       [key]: value
     }))
   }
+  getName()
+
   return (
     <div className='pt-6'>
       <PageTitle title='Pesquisa' />
-      <h1 className='w-1/5 mx-auto font-bold my-6 text-2xl'>Críticas e sugestões</h1>
-      {!data && <p>Carregando...</p>}
-      {data && <p className='w-2/5 mx-auto font-bold'>
-        O {data.nomeRestaurante} sempre busca por atender melhor seus clientes. <br />
-        Por isso, estamos sempre abertos a ouvir sua opinião.
-      </p>}
+      <h1 className='w-2/5 mx-auto font-bold my-6 text-2xl text-center'>Críticas e sugestões</h1>
+      <p className='w-3/5 mx-auto font-bold text-center'>
+        O {name.nomeRestaurante} sempre busca por atender melhor seus clientes. <br />
+        Sua opinião e/ou sugestão é muito bem-vinda!
+      </p>
       {!sucess && <div className='w-1/5 mx-auto my-6'>
         <label className='font-bold'>Seu nome: </label>
         <label className='text-red-400' id='nomeReq' hidden>*Campo obrigatório</label>
@@ -107,10 +122,11 @@ const Pesquisa = () => {
         <input type='text' className='p-4 block shadow bg-blue-100 my-2 rounded' placeholder='Email' onChange={onChange} name='Email' value={form.Email} />
         <label className='font-bold'>WhatsApp: </label>
         <label className='text-red-400' id='whatsappReq' hidden>*Campo obrigatório</label>
-        <input type='text' className='p-4 block shadow bg-blue-100 my-2 rounded' placeholder='Whatsapp' onChange={onChange} name='Whatsapp' value={form.Whatsapp} />
+        <InputMask mask="(99)99999-9999" className='p-4 block shadow bg-blue-100 my-2 rounded' placeholder='Whatsapp' onChange={onChange} name='Whatsapp' value={form.Whatsapp} />
+        {/*<input type='text' className='p-4 block shadow bg-blue-100 my-2 rounded' placeholder='Whatsapp' onChange={onChange} name='Whatsapp' value={form.Whatsapp} />*/}
         <label className='font-bold'>Sua crítica/sugestão: </label>
         <input type='text' className='p-4 block shadow bg-blue-100 my-2 rounded' placeholder='Critica' onChange={onChange} name='Critica' value={form.Critica} />
-        <p>Qual a sua nota para nosso restaurante? </p>
+        <p className='font-bold'>Qual a sua nota para nosso restaurante? </p>
         <label className='text-red-400' id='notaReq' hidden>*Campo obrigatório</label>
         <div className='flex py-6'>
           {notas.map(nota => {
@@ -122,7 +138,7 @@ const Pesquisa = () => {
           })
           }
         </div>
-        <p>Você nos indicaria para algum amigo?</p>
+        <p className='font-bold'>Você nos indicaria para algum amigo?</p>
         <label className='text-red-400' id='indicaReq' hidden>*Campo obrigatório</label>
         <div className='flex py-6'>
           {indica.map(indica => {

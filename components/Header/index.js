@@ -7,11 +7,11 @@ const Header = () => {
   return (
     <React.Fragment>
       <div className={styles.wrapper}>
-        <div className='container mx-auto'>
+        <div className='container mx-auto text-center'>
           <Link href='/' >
             <a><img className='mx-auto' src='/logo_palpitebox.png' alt='PalpiteBox' /></a>
           </Link>
-          <label className='text-center font-bold'>Versão: {JSON.version}</label>
+          <label className='font-bold'>Versão: {JSON.version}</label>
         </div>
       </div>
       <div className='bg-gray-300 p-4 shadow-md text-center'>
