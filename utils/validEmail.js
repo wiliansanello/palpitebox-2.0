@@ -20,9 +20,7 @@ const validEmail = (emailAdress) => {
     isEmailValid = false
   }
 
-  console.log(isEmailValid)
+  return isEmailValid
 }
-
-
 
 export default validEmail
