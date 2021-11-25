@@ -31,7 +31,9 @@ Este projeto pode ser colocado em produção utilizando o Vercel (sem configura�
 * [Tailwind CSS](https://tailwindcss.com) - A utility-first framework for rapidly building custom designs.
 * [SWR](https://swr.vercel.app) - React hooks for data fetching.
 * [Moment](https://momentjs.com/) - Parse, validate, manipulate, and display dates and times in JavaScript.
-* [Google Spreadsheet API](https://developers.google.com/sheets/api) - Read and write spreadsheet data
+* [Google Spreadsheet API](https://developers.google.com/sheets/api) - Read and write spreadsheet dataReact
+* [react-map-gl](https://visgl.github.io/react-map-gl/) - React wrapper for Mapbox GL JS
+* [react-input-mask](https://github.com/sanniassin/react-input-mask) - Input masking component for React. Made with attention to UX.
 
 
 ## Author:
@@ -46,4 +48,4 @@ Este projeto é licenciado sobre a licença MIT - veja [LICENSE.md](LICENSE.md) 
 
 ## Acknowlegments
 
-Este projeto foi construído durante as aulas do Fullstack Master do [DevPleno](https://devpleno.com).
+Este projeto É uma melhoria do [PalpiteBox](https://github.com/wiliansanello/palpite-box), desenvolvido durante as aulas do Fullstack Master do [DevPleno](https://devpleno.com).
