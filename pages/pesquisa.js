@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import PageTitle from '../components/PageTitle'
 import InputMask from 'react-input-mask'
+import validEmail from '../utils/validEmail'
 
 const Pesquisa = () => {
   const [form, setForm] = useState({
@@ -40,7 +41,7 @@ const Pesquisa = () => {
     }
   }
 
-  const getName = async () => {
+  /*const getName = async () => {
 
     try {
       const response = await fetch('/api/get-promo', {
@@ -54,7 +55,7 @@ const Pesquisa = () => {
     } catch (err) {
       console.log(err)
     }
-  }
+  }*/
 
   const alertFill = () => {
     toast.configure()
@@ -73,6 +74,7 @@ const Pesquisa = () => {
     } else {
       document.getElementById('emailReq').setAttribute('hidden', 'hidden')
     }
+
 
     if (form.Whatsapp === '') {
       document.getElementById('whatsappReq').removeAttribute('hidden')
@@ -95,6 +97,29 @@ const Pesquisa = () => {
     setSaveForm(true)
   }
 
+  const onBlur = evt => {
+    const value = evt.target.value
+    const key = evt.target.name
+    const correctEmail = validEmail(value)
+
+    if (correctEmail === false) {
+      toast.configure()
+      toast.info('Por favor insira um endereço de e-mail válido', {
+        position: toast.POSITION.TOP_CENTER
+      })
+      document.getElementById('Email').focus()
+    }
+
+    /*if (whatsApp.length === 13) {
+      whatsApp = form.Whatsapp.slice(0, 12) //.split('_')[0]
+      form.Whatsapp = whatsApp
+    } else if (whatsapp.lenght <= 12) {
+      toast.configure()
+      toast.info('Por favor insira um número de WhatsApp válido')
+    }*/
+
+  }
+
   const onChange = evt => {
     const value = evt.target.value
     const key = evt.target.name
@@ -103,7 +128,7 @@ const Pesquisa = () => {
       [key]: value
     }))
   }
-  getName()
+  //getName()
 
   return (
     <div className='pt-6'>
@@ -116,14 +141,13 @@ const Pesquisa = () => {
       {!sucess && <div className='w-1/5 mx-auto my-6'>
         <label className='font-bold'>Seu nome: </label>
         <label className='text-red-400' id='nomeReq' hidden>*Campo obrigatório</label>
-        <input type='text' className='p-4 block shadow bg-blue-100 my-2 rounded' placeholder='Nome' onChange={onChange} name='Nome' value={form.Nome} />
+        <input type='text' className='p-4 block shadow bg-blue-100 my-2 rounded' placeholder='Nome' onChange={onChange} name='Nome' value={form.Nome} autoFocus />
         <label className='font-bold'>E-mail: </label>
         <label className='text-red-400' id='emailReq' hidden>*Campo obrigatório</label>
-        <input type='text' className='p-4 block shadow bg-blue-100 my-2 rounded' placeholder='Email' onChange={onChange} name='Email' value={form.Email} />
+        <input type='text' className='p-4 block shadow bg-blue-100 my-2 rounded' id='Email' placeholder='Email' onBlur={onBlur} onChange={onChange} name='Email' value={form.Email} />
         <label className='font-bold'>WhatsApp: </label>
         <label className='text-red-400' id='whatsappReq' hidden>*Campo obrigatório</label>
-        <InputMask mask="(99)99999-9999" className='p-4 block shadow bg-blue-100 my-2 rounded' placeholder='Whatsapp' onChange={onChange} name='Whatsapp' value={form.Whatsapp} />
-        {/*<input type='text' className='p-4 block shadow bg-blue-100 my-2 rounded' placeholder='Whatsapp' onChange={onChange} name='Whatsapp' value={form.Whatsapp} />*/}
+        <InputMask mask="(99)99999-9999" className='p-4 block shadow bg-blue-100 my-2 rounded' id='Whatsapp' placeholder='Whatsapp' onChange={onChange} name='Whatsapp' value={form.Whatsapp} />
         <label className='font-bold'>Sua crítica/sugestão: </label>
         <input type='text' className='p-4 block shadow bg-blue-100 my-2 rounded' placeholder='Critica' onChange={onChange} name='Critica' value={form.Critica} />
         <p className='font-bold'>Qual a sua nota para nosso restaurante? </p>
@@ -153,7 +177,7 @@ const Pesquisa = () => {
         </div>
         <div className='text-center'>
           <Link href='/pesquisa'>
-            <button className='bg-indigo-700 px-8 py-4 font-bold rounded-lg shadow-lg hover:shadow' onClick={save} >Enviar crítica / sugestão</button>
+            <button className='bg-blue-400 px-8 py-4 font-bold rounded-lg shadow-lg hover:shadow text-white' onClick={save} >Enviar crítica / sugestão</button>
           </Link>
         </div>
       </div>}
