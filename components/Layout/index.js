@@ -4,13 +4,15 @@ import Footer from '../Footer'
 
 const Layout = ({ children }) => {
   return (
-    <div>
-      <Header />
-      <div className='container mx-auto'>
-        {children}
+    <body className='bg-yellow-300'>
+      <div>
+        <Header />
+        <div>
+          {children}
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </body>
   )
 }
 

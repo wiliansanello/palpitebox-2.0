@@ -11,10 +11,10 @@ const Header = () => {
           <Link href='/' >
             <a><img className='mx-auto' src='/logo_palpitebox.png' alt='PalpiteBox' /></a>
           </Link>
-          <label className='font-bold'>Versão: {JSON.version}</label>
+          <label className='font-bold text-white'>Versão: {JSON.version}</label>
         </div>
       </div>
-      <div className='bg-gray-300 p-4 shadow-md text-center'>
+      <div className='bg-red-500 p-4 shadow-md text-center text-white'>
         <div>
           <Link href='/sobre'>
             <a className='px-2 hover:underline'>Sobre</a>

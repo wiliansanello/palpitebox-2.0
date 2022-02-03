@@ -45,7 +45,7 @@ export default async (req, res) => {
       Promo = textoCell.value
     }
 
-    const reqFields = [data.Nome, data.Email, data.Whatsapp, data.Nota, data.Indica]
+    const reqFields = [data.Nome, data.Email, data.Whatsapp, data.Indica]
     const saveData = checkForm(reqFields)
 
     //Nome E-mail WhatsApp Cupom Promo Critica
@@ -56,10 +56,11 @@ export default async (req, res) => {
         Whatsapp: data.Whatsapp,
         Cupom,
         Promo,
-        Critica: data.Critica,
+        Atendimento: parseInt(data.Atendimento),
+        Refeicao: parseInt(data.Refeicao),
+        Indica: data.Indica,
         'Data Preenchimento': moment().format('DD/MM/YYYY, HH:mm:ss'),
-        Nota: parseInt(data.Nota),
-        Indica: data.Indica
+        Critica: data.Critica
       })
     }
     res.end(JSON.stringify({

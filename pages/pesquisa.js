@@ -1,22 +1,20 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
+import Star from '../components/Star'
+import Emoji from '../css/emoji.module.scss'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import PageTitle from '../components/PageTitle'
 import InputMask from 'react-input-mask'
-import validEmail from '../utils/validEmail'
+import * as yup from 'yup'
+import { useFormik } from 'formik'
 
 const Pesquisa = () => {
-  const [form, setForm] = useState({
-    Nome: '',
-    Email: '',
-    Whatsapp: '',
-    Critica: '',
-    Nota: -1,
-    Indica: ''
+  const [initialNotes, setHover] = useState({
+    Atendimento: 0,
+    Refeicao: 0
   })
-  const notas = [0, 1, 2, 3, 4, 5]
-  const indica = ['Sim', 'Não']
+  const notes = [1, 2, 3, 4, 5]
   const [sucess, setSuccess] = useState(false)
   const [retorno, setRetorno] = useState({})
   const [saveForm, setSaveForm] = useState(true)
@@ -27,9 +25,9 @@ const Pesquisa = () => {
 
       const response = await fetch('/api/save', {
         method: 'POST',
-        body: JSON.stringify(form)
+        body: JSON.stringify(form.values)
       })
-
+      console.log(response)
       const data = await response.json()
       setRetorno(data)
 
@@ -40,6 +38,61 @@ const Pesquisa = () => {
       console.log('err')
     }
   }
+
+  const onChange = evt => {
+    evt.preventDefault()
+    const value = evt.target.value
+    const key = evt.target.name
+    setHover(old => ({
+      ...old,
+      [key]: value
+    }))
+  }
+
+  const hover = event => {
+    event.preventDefault()
+    const value = event.target.value
+    const key = event.target.name
+
+    setHover(old => ({
+      ...old,
+      [key]: value
+    }))
+
+  }
+
+  const unHover = event => {
+    event.preventDefault()
+    const value = event.target.value
+    const key = event.target.name
+
+    setHover(old => ({
+      ...old,
+      [key]: ''
+    }))
+  }
+
+  const schema = yup.object().shape({
+    Nome: yup.string().required(' * Campo obrigatório'),
+    Email: yup.string().required(' * Campo obrigatório')
+      .email(' * Preencha um e-mail válido'),
+    Whatsapp: yup.string().required(' * Campo obrigatório')
+  })
+
+  const form = useFormik({
+    initialValues: {
+      Nome: '',
+      Email: '',
+      Whatsapp: '',
+      Atendimento: 0,
+      Refeicao: 0,
+      Indica: false,
+      Critica: ''
+    },
+    //onChange: onChange,
+    onSubmit: save,
+    validationSchema: schema
+  })
 
   /*const getName = async () => {
 
@@ -57,127 +110,149 @@ const Pesquisa = () => {
     }
   }*/
 
+
+
   const alertFill = () => {
     toast.configure()
     toast.info('Ops! Há algum(ns) campo(s) não preenchidos!', {
       position: toast.POSITION.TOP_CENTER
     })
-
-    if (form.Nome === '') {
-      document.getElementById('nomeReq').removeAttribute('hidden')
-    } else {
-      document.getElementById('nomeReq').setAttribute('hidden', 'hidden')
-    }
-
-    if (form.Email === '') {
-      document.getElementById('emailReq').removeAttribute('hidden')
-    } else {
-      document.getElementById('emailReq').setAttribute('hidden', 'hidden')
-    }
-
-
-    if (form.Whatsapp === '') {
-      document.getElementById('whatsappReq').removeAttribute('hidden')
-    } else {
-      document.getElementById('whatsappReq').setAttribute('hidden', 'hidden')
-    }
-
-    if (form.Nota === -1) {
-      document.getElementById('notaReq').removeAttribute('hidden')
-    } else {
-      document.getElementById('notaReq').setAttribute('hidden', 'hidden')
-    }
-
-    if (form.Indica === '') {
-      document.getElementById('indicaReq').removeAttribute('hidden')
-    } else {
-      document.getElementById('indicaReq').setAttribute('hidden', 'hidden')
-    }
-
     setSaveForm(true)
   }
 
-  const onBlur = evt => {
-    const value = evt.target.value
-    const key = evt.target.name
-    const correctEmail = validEmail(value)
 
-    if (correctEmail === false) {
-      toast.configure()
-      toast.info('Por favor insira um endereço de e-mail válido', {
-        position: toast.POSITION.TOP_CENTER
-      })
-      document.getElementById('Email').focus()
-    }
-
-    /*if (whatsApp.length === 13) {
-      whatsApp = form.Whatsapp.slice(0, 12) //.split('_')[0]
-      form.Whatsapp = whatsApp
-    } else if (whatsapp.lenght <= 12) {
-      toast.configure()
-      toast.info('Por favor insira um número de WhatsApp válido')
-    }*/
-
-  }
-
-  const onChange = evt => {
-    const value = evt.target.value
-    const key = evt.target.name
-    setForm(old => ({
-      ...old,
-      [key]: value
-    }))
-  }
   //getName()
 
   return (
-    <div className='pt-6'>
+    <>
       <PageTitle title='Pesquisa' />
-      <h1 className='w-2/5 mx-auto font-bold my-6 text-2xl text-center'>Críticas e sugestões</h1>
+      <h1
+        className='w-2/5 mx-auto font-bold my-6 text-2xl text-center'
+      >
+        Críticas e sugestões</h1>
       <p className='w-3/5 mx-auto font-bold text-center'>
-        O {name.nomeRestaurante} sempre busca por atender melhor seus clientes. <br />
+        O {/*name.nomeRestaurante*/} sempre busca por atender melhor seus clientes. <br />
         Sua opinião e/ou sugestão é muito bem-vinda!
       </p>
+
       {!sucess && <div className='w-1/5 mx-auto my-6'>
-        <label className='font-bold'>Seu nome: </label>
-        <label className='text-red-400' id='nomeReq' hidden>*Campo obrigatório</label>
-        <input type='text' className='p-4 block shadow bg-blue-100 my-2 rounded' placeholder='Nome' onChange={onChange} name='Nome' value={form.Nome} autoFocus />
-        <label className='font-bold'>E-mail: </label>
-        <label className='text-red-400' id='emailReq' hidden>*Campo obrigatório</label>
-        <input type='text' className='p-4 block shadow bg-blue-100 my-2 rounded' id='Email' placeholder='Email' onBlur={onBlur} onChange={onChange} name='Email' value={form.Email} />
-        <label className='font-bold'>WhatsApp: </label>
-        <label className='text-red-400' id='whatsappReq' hidden>*Campo obrigatório</label>
-        <InputMask mask="(99)99999-9999" className='p-4 block shadow bg-blue-100 my-2 rounded' id='Whatsapp' placeholder='Whatsapp' onChange={onChange} name='Whatsapp' value={form.Whatsapp} />
-        <label className='font-bold'>Sua crítica/sugestão: </label>
-        <input type='text' className='p-4 block shadow bg-blue-100 my-2 rounded' placeholder='Critica' onChange={onChange} name='Critica' value={form.Critica} />
-        <p className='font-bold'>Qual a sua nota para nosso restaurante? </p>
-        <label className='text-red-400' id='notaReq' hidden>*Campo obrigatório</label>
-        <div className='flex py-6'>
-          {notas.map(nota => {
-            return (
-              <label key='nota' className='block w-1/6 font-bold text-center'>
-                <input type='radio' name='Nota' value={nota} onChange={onChange} />
-                <br />{nota}
-              </label>)
-          })
-          }
-        </div>
-        <p className='font-bold'>Você nos indicaria para algum amigo?</p>
-        <label className='text-red-400' id='indicaReq' hidden>*Campo obrigatório</label>
-        <div className='flex py-6'>
-          {indica.map(indica => {
-            return (
-              <label key='indica' className='block w-1/2 font-bold text-center'>
-                <input type='radio' name='Indica' value={indica} onChange={onChange} />
-                <br />{indica}
+        <label className='font-bold'>
+          Seu nome:
+          {form.errors.Nome && form.touched.Nome ? form.errors.Nome : ''}
+          <input
+            type='text'
+            className='p-4 block shadow bg-blue-100 my-2 rounded'
+            placeholder='Nome'
+            name='Nome'
+            value={form.values.Nome}
+            onChange={form.handleChange}
+            onBlur={form.handleBlur}
+          />
+        </label>
+        <label className='font-bold'>
+          Seu e-mail:
+          {form.errors.Email && form.touched.Email ? form.errors.Email : ''}
+          <input
+            type='text'
+            className='p-4 block shadow bg-blue-100 my-2 rounded'
+            placeholder='E-mail'
+            name='Email'
+            value={form.values.Email}
+            onChange={form.handleChange}
+            onBlur={form.handleBlur}
+          />
+        </label>
+        <label className='font-bold'>
+          WhatsApp:
+          {form.errors.Whatsapp && form.touched.Whatsapp ? form.errors.Whatsapp : ''}
+          <InputMask
+            mask="(99)99999-9999"
+            className='p-4 block shadow bg-blue-100 my-2 rounded'
+            placeholder='Whatsapp'
+            name='Whatsapp'
+            value={form.values.Whatsapp}
+            onChange={form.handleChange}
+            onBlur={form.handleBlur}
+          />
+        </label>
+        <label className='font-bold'>
+          Por favor, avalie nosso restaurante: <br /><br />
+          <div>
+            <label className='font-bold'>
+              Atendimento
+              <br />
+              {notes.map(note => {
+                return (
+                  <div className='inline-block align-middle'>
+                    <label
+                      key={note}
+                      onMouseEnter={event => hover(event)}
+                      onMouseLeave={event => unHover(event)}
+                      className={`${(form.values.Atendimento >= note || initialNotes.Atendimento >= note) ? 'text-red-800' : 'text-gray-400'}`}
+                      value={form.values.Atendimento}
+                      onChange={form.handleChange}
+                    >
+                      <Star name='Atendimento' value={note} size='8' handleClick={onChange} />
+                      <br />
+                    </label>
+                  </div>)
+              })
+              }
+            </label>
+            <br />
+            <label className='font-bold'>
+              Refeição
+              <br />
+              {notes.map(note => {
+                return (
+                  <div className='inline-block align-middle'>
+                    <label
+                      key={note}
+                      onMouseEnter={event => hover(event)}
+                      onMouseLeave={event => unHover(event)}
+                      className={`${(form.values.Refeicao >= note || initialNotes.Refeicao >= note) ? 'text-red-800' : 'text-gray-400'}`}
+                      value={form.values.Refeicao}
+                      onChange={form.handleChange}
+                    >
+                      <Star name='Refeicao' value={note} size='8' handleClick={onChange} />
+                      <br />
+                    </label>
+                  </div>)
+              })
+              }
+            </label>
+            <br />
+            <label className='font-bold'>
+              Você nos recomendaria para algum amigo?
+            </label>
+            <div className={Emoji.emoji + Emoji.like}>
+              <input
+                type="checkbox"
+                name="Indica"
+                className={Emoji.emoji}
+                checked={form.values.Indica}
+                onChange={form.handleChange}
+              />
+              <div className={Emoji.emoji}></div>
+              <label for="Indica" className={Emoji.well}>
               </label>
-            )
-          })
-          }
-        </div>
+            </div>
+          </div>
+        </label>
+        <label className='font-bold'>
+          Sua crítica/sugestão:
+          <textarea
+            className='p-4 block shadow bg-blue-100 my-2 rounded'
+            placeholder='Crítica'
+            name='Critica'
+            value={form.values.Critica}
+            onChange={form.handleChange}
+          />
+        </label>
+        <pre>{JSON.stringify(form.values, null, 2)}</pre>
         <div className='text-center'>
           <Link href='/pesquisa'>
-            <button className='bg-blue-400 px-8 py-4 font-bold rounded-lg shadow-lg hover:shadow text-white' onClick={save} >Enviar crítica / sugestão</button>
+            <button className='bg-red-800 px-8 py-4 w-40 my-8 mb-20 font-bold rounded-lg shadow-lg hover:shadow text-white' onClick={save} >Enviar</button>
           </Link>
         </div>
       </div>}
@@ -193,14 +268,14 @@ const Pesquisa = () => {
           </div>
         }
         {
-          retorno.showCoupon && <div className='text-center border p-4 mb-4'>
+          retorno.showCoupon && <div className='text-center border p-4 mb-24'>
             <span className='font-bold block-mb2'> {retorno.Promo}</span>
             <br />
             Tire um print ou foto desta tela e apresente ao garçom.
           </div>
         }
       </div>}
-    </div>
+    </>
   )
 }
 

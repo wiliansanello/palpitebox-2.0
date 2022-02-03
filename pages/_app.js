@@ -4,9 +4,18 @@ import '../css/styles.css'
 
 const MyApp = ({ Component, pageProps }) => {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <html>
+      <head>
+        <link href='https://api.mapbox.com/mapbox-g1-js/v1.12.0/mapbox-g1.css' rel='stylesheet' />
+      </head>
+      <body>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </body>
+    </html >
+
+
   )
 }
 
